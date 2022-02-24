@@ -13,36 +13,39 @@ export function Home() {
   const navigate = useNavigate();
   const { user, signInWithGoogle } = useAuth();
 
-  async function handleCreateDash() {
-    
+  async function handleCreateDash() {   
     if (!user) {
       await signInWithGoogle();
-    }
+    } 
 
-    const roomRef = database.ref('dashboards'); 
-    let keyId;
+    if (user) {
+      const roomRef = database.ref('dashboards'); 
+      let keyId;
 
-    await roomRef.once('value', function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        let key = childSnapshot.key;
-        let data = childSnapshot.val();
+      await roomRef.once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          let key = childSnapshot.key;
+          let data = childSnapshot.val();
 
-        if (data.authorId.includes(user?.id) === true) {
-          keyId = key;
-        } 
+          if (data.authorId.includes(user.id) === true) {
+            keyId = key;
+          } 
+        });
       });
-    });
-
-    if (keyId) {
-      navigate(`dashboard/${keyId}`);
-      
+    
+      if (keyId) {
+        navigate(`dashboard/${keyId}`);
+        
+        return;
+      } else {
+        const firebaseDash = await roomRef.push({
+          authorId: user.id
+        })
+        navigate(`/dashboard/${firebaseDash.key}`);
+      }
+    } else {
       return;
     }
-    
-    const firebaseDash = await roomRef.push({
-      authorId: user?.id
-    })
-    navigate(`/dashboard/${firebaseDash.key}`); 
   }
   
   return (
