@@ -14,11 +14,12 @@ export function Home() {
   const { user, signInWithGoogle } = useAuth();
 
   async function handleCreateDash() {
+    
     if (!user) {
       await signInWithGoogle();
     }
 
-    const roomRef = database.ref('dashboards'); 
+    const roomRef = await database.ref('dashboards'); 
     let keyId;
 
     await roomRef.once('value', function(snapshot) {
@@ -31,7 +32,7 @@ export function Home() {
         } 
       });
     });
-    
+
     if (keyId) {
       navigate(`dashboard/${keyId}`);
       
@@ -40,8 +41,7 @@ export function Home() {
     
     const firebaseDash = await roomRef.push({
       authorId: user?.id
-    });
-
+    })
     navigate(`/dashboard/${firebaseDash.key}`); 
   }
   

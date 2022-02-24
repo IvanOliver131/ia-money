@@ -14,6 +14,17 @@ export const Content = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  span {
+    color: #FFF;
+
+    transition: 0.2s;
+
+    &:hover {
+      cursor: pointer;
+      filter: brightness(0.9);
+    }
+  }
+
   button {
     font-size: 1rem;
     color: #FFF;
