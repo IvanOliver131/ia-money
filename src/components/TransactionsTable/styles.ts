@@ -41,6 +41,13 @@ export const Container = styled.div`
 
       img {
         height: 1.5rem;
+
+        transition: 0.2s;
+
+        &:hover {
+          cursor: pointer;
+          filter: brightness(0.9);
+        }
       }
     }
   }

@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom';
 // import { createServer, Model } from 'miragejs';
 import { App } from './App';
 
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+// como criar rotas com o miragejs
 // createServer({
 //   models: {
 //     transaction: Model,
@@ -45,12 +53,5 @@ import { App } from './App';
 //     })
 //   }
 // })
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
 

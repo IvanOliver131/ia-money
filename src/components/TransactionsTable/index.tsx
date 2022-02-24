@@ -4,9 +4,17 @@ import { Container } from "./styles";
 import deleteImg from '../../assets/trash-alt.svg';
 import editImg from '../../assets/edit.svg';
 
-export function TransactionsTable() {
+interface DeleteProps {
+  onOpenEditModal: (id: number) => void;
+}
+
+export function TransactionsTable({ onOpenEditModal }: DeleteProps) {
   // Pega as transactions direto do contexto
-  const { transactions } = useTransactions();
+  const { transactions, deleteTransaction } = useTransactions();
+
+  function handleDeleteModal(selectedId: number) {
+    deleteTransaction(selectedId);
+  }
   
   return (
     <Container>
@@ -38,12 +46,12 @@ export function TransactionsTable() {
                   {transaction.createdAt}
                   {/* {new Intl.DateTimeFormat('pt-BR').format(new Date(transaction.createdAt))} */}
                 </td>
-                <td>
-                  <img src={deleteImg} alt="Apagar" />
-                </td>
-                <td>
+                <td onClick={()=> onOpenEditModal(transaction.id)}>
                   <img src={editImg} alt="Editar" />
                 </td>
+                <td onClick={()=> handleDeleteModal(transaction.id)}>
+                  <img src={deleteImg} alt="Apagar" />
+                </td>          
               </tr>
             )
           })}

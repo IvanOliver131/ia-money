@@ -22,6 +22,8 @@ interface TrasactionProviderProps {
 interface TransactionsContextData {
   transactions: Transaction[];
   createTransaction: (transaction: TransactionInput) => Promise<void>;
+  editTransaction: (selectedId: number, transaction: TransactionInput) => Promise<void>;
+  deleteTransaction: (selectedId: number) => Promise<void>;
 }
 
 type TransactionInput = Omit<Transaction, 'id' | 'createdAt'>;
@@ -120,8 +122,58 @@ export function TransactionsProvider({ children }: TrasactionProviderProps) {
     setTransactions([...transactions, transaction])
   }
 
+  async function editTransaction(selectedId: number, transactionInput: TransactionInput) {
+    const transactionRef = database.ref(`dashboards/${dashId}/transactions`);
+    
+    let keyId;
+
+    await transactionRef.on('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        let key = childSnapshot.key;
+        let childData = childSnapshot.val();
+
+        if(childData.id === selectedId) {
+          keyId = key;
+        }
+      });
+    });
+
+    if (keyId) {
+      await transactionRef.child(keyId).update(transactionInput);
+
+      return;
+    } else {
+      return;
+    }
+  }
+
+  async function deleteTransaction(selectedId: number) {
+    const transactionRef = database.ref(`dashboards/${dashId}/transactions`);
+    
+    let keyId;
+
+    await transactionRef.on('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        let key = childSnapshot.key;
+        let childData = childSnapshot.val();
+
+        if(childData.id === selectedId) {
+          keyId = key;
+        }
+      });
+    });
+
+    if (keyId) {
+      await transactionRef.child(keyId).remove();
+
+      return;
+    } else {
+      return;
+    }   
+  }
+
   return (
-    <TransactionsContext.Provider value={{ transactions, createTransaction }}>
+    <TransactionsContext.Provider value={{ transactions, createTransaction, editTransaction, deleteTransaction }}>
       {children}
     </TransactionsContext.Provider>
   );

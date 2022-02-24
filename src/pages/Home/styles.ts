@@ -9,7 +9,7 @@ export const Container = styled.div`
     aside {
       flex: 7;
 
-      background: #ea4335;
+      background: var(--red);
       color: #fff;
 
       display: flex;
@@ -99,7 +99,7 @@ export const Container = styled.div`
       height: 50px;
       border-radius: 8px;
       font-weight: 500;
-      background: #ea4335;
+      background: var(--red);
       color: #fff;
 
       display: flex;
