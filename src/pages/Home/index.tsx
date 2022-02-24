@@ -19,7 +19,7 @@ export function Home() {
       await signInWithGoogle();
     }
 
-    const roomRef = await database.ref('dashboards'); 
+    const roomRef = database.ref('dashboards'); 
     let keyId;
 
     await roomRef.once('value', function(snapshot) {
