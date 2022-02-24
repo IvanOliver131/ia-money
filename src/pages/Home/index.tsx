@@ -7,42 +7,45 @@ import googleIconImg from '../../assets/images/google-icon.svg';
 import { useAuth } from '../../hooks/useAuth';
 
 import { Container } from './styles';
-import { database } from '../../services/firebase';
+// import { database } from '../../services/firebase';
 
 export function Home() {
   const navigate = useNavigate();
+
   const { user, signInWithGoogle } = useAuth();
+
 
   async function handleCreateDash() {   
     if (!user) {
       await signInWithGoogle();
     } 
 
-    const roomRef = database.ref('dashboards'); 
-    let keyId;
+    navigate('/dashboard')
+    // const roomRef = database.ref('dashboards'); 
+    // let keyId;
 
-    await roomRef.once('value', function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        let key = childSnapshot.key;
-        let data = childSnapshot.val();
+    // await roomRef.once('value', function(snapshot) {
+    //   snapshot.forEach(function(childSnapshot) {
+    //     let key = childSnapshot.key;
+    //     let data = childSnapshot.val();
+        
+    //     if (data.authorId.includes(user?.id) === true) {
+    //       keyId = key;
+    //     } 
+    //   });
+    // });
 
-        if (data.authorId.includes(user?.id) === true) {
-          keyId = key;
-        } 
-      });
-    });
-    console.log(keyId)
-    if (keyId !== undefined) {
-      navigate(`dashboard/${keyId}`);
+    // if (keyId !== undefined) {
+    //   navigate(`dashboard/${keyId}`);
 
-      return;
-    } 
+    //   return;
+    // } 
+
+    // const firebaseDash = await roomRef.push({
+    //   authorId: user?.id
+    // })
     
-    const firebaseDash = await roomRef.push({
-      authorId: user?.id
-    })
-    
-    navigate(`/dashboard/${firebaseDash.key}`);  
+    // navigate(`/dashboard/${firebaseDash.key}`); 
   }
   
   return (
@@ -64,5 +67,5 @@ export function Home() {
         </main>
       </div>
     </Container>
-  )
+  );
 }

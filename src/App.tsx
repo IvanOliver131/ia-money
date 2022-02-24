@@ -6,6 +6,7 @@ import { AuthContextProvider } from './contexts/AuthContext';
 
 import { Dashboard } from "./pages/Dashboard";
 import { Home } from './pages/Home';
+import { Redirect } from "./pages/Redirect";
 import { GlobalStyle } from "./styles/global";
 
 Modal.setAppElement('#root');
@@ -16,6 +17,7 @@ export function App() {
       <AuthContextProvider>
         <Routes>
           <Route path="/" element={<Home/>} />
+          <Route path="/dashboard" element={<Redirect/>} />
           <Route path="/dashboard/:id" element={<Dashboard/>} />
         </Routes>
       </AuthContextProvider> 
