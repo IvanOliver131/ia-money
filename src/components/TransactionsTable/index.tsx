@@ -1,6 +1,9 @@
 import { useTransactions } from "../../hooks/useTransactions";
 import { Container } from "./styles";
 
+import deleteImg from '../../assets/trash-alt.svg';
+import editImg from '../../assets/edit.svg';
+
 export function TransactionsTable() {
   // Pega as transactions direto do contexto
   const { transactions } = useTransactions();
@@ -14,6 +17,8 @@ export function TransactionsTable() {
             <th>Valor</th>
             <th>Categoria</th>
             <th>Data</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
 
@@ -30,7 +35,14 @@ export function TransactionsTable() {
                 </td>
                 <td>{transaction.category}</td>
                 <td>
-                  {new Intl.DateTimeFormat('pt-BR').format(new Date(transaction.amount))}
+                  {transaction.createdAt}
+                  {/* {new Intl.DateTimeFormat('pt-BR').format(new Date(transaction.createdAt))} */}
+                </td>
+                <td>
+                  <img src={deleteImg} alt="Apagar" />
+                </td>
+                <td>
+                  <img src={editImg} alt="Editar" />
                 </td>
               </tr>
             )
