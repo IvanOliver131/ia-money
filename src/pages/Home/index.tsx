@@ -16,7 +16,7 @@ export function Home() {
 
 
   async function handleCreateDash() {   
-    if (!user) {
+    if (!user || user.id === '' || user.avatar === '' || user.name === '') {
       await signInWithGoogle();
     } 
 
