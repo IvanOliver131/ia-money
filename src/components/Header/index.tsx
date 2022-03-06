@@ -12,8 +12,8 @@ export function Header({ onOpenNewTransactionModal }: HeaderProps) {
   const navigate = useNavigate();
   const { signOut } = useAuth();
 
-  function handleLogout() {
-    signOut();
+  async function handleLogout() {
+    await signOut();
 
     navigate('/');
   }
