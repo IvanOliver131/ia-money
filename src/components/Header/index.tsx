@@ -22,7 +22,7 @@ export function Header({ onOpenNewTransactionModal }: HeaderProps) {
     <Container>
       <Content>
         <img src={logoImg} alt="ia money" />]
-        <span onClick={handleLogout}>Logout</span>
+        <span onClick={handleLogout}>Sair</span>
         <button type="button" onClick={onOpenNewTransactionModal}>
           Nova Transação
         </button>    

@@ -68,7 +68,11 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 
   async function signOut() {  
     await auth.signOut().then(() => {
-      // Sign-out successful.
+      setUser({
+        id: '',
+        name: '',
+        avatar: ''
+      });
     }).catch((error) => {
       // An error happened.
     });
