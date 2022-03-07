@@ -67,12 +67,10 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
   }
 
   async function signOut() {  
+    const userLoged = undefined;
+
     await auth.signOut().then(() => {
-      setUser({
-        id: '',
-        name: '',
-        avatar: ''
-      });
+      setUser((e) => e = userLoged);
     }).catch((error) => {
       // An error happened.
     });
